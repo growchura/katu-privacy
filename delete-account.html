@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliminar cuenta — K'atu</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #333; line-height: 1.7; background: #f8f8f8; }
+  .card { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+  h1 { color: #1B5E20; margin-bottom: 8px; }
+  .subtitle { color: #666; margin-bottom: 32px; font-size: 0.95rem; }
+  .warning { background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px; padding: 16px; margin-bottom: 24px; font-size: 0.9rem; }
+  .warning strong { color: #856404; }
+  .form-group { margin-bottom: 20px; }
+  label { display: block; font-size: 0.85rem; color: #555; margin-bottom: 8px; font-weight: 600; }
+  input, textarea, select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; font-size: 0.9rem; color: #333; box-sizing: border-box; transition: border 0.3s; outline: none; }
+  input:focus, textarea:focus, select:focus { border-color: #1B5E20; }
+  textarea { resize: none; height: 100px; }
+  .btn { width: 100%; background: #c62828; color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.3s; }
+  .btn:hover { background: #b71c1c; }
+  .success { display: none; background: #e8f5e9; border: 1px solid #1B5E20; border-radius: 10px; padding: 20px; text-align: center; color: #1B5E20; }
+  .success h3 { margin: 0 0 8px; }
+  .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+  .logo-circle { width: 40px; height: 40px; background: #1B5E20; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #F5B700; font-weight: 800; font-size: 1.1rem; }
+  .logo span { font-weight: 700; font-size: 1.1rem; color: #1B5E20; }
+  .note { font-size: 0.8rem; color: #999; margin-top: 16px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-circle">K</div>
+    <span>K'atu</span>
+  </div>
+
+  <h1>Eliminar mi cuenta</h1>
+  <p class="subtitle">Completa el formulario para solicitar la eliminación de tu cuenta y todos tus datos asociados.</p>
+
+  <div class="warning">
+    <strong>⚠️ Atención:</strong> Esta acción es irreversible. Se eliminarán permanentemente tu perfil, publicaciones, mensajes y todos los datos asociados a tu cuenta en un plazo de 30 días.
+  </div>
+
+  <div id="form">
+    <div class="form-group">
+      <label>Correo electrónico de tu cuenta *</label>
+      <input type="email" id="email" placeholder="tu@email.com" required>
+    </div>
+    <div class="form-group">
+      <label>Motivo de eliminación</label>
+      <select id="motivo">
+        <option value="">Selecciona un motivo (opcional)</option>
+        <option>Ya no uso la app</option>
+        <option>Problemas con la app</option>
+        <option>Privacidad y seguridad</option>
+        <option>Cree otra cuenta</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Comentario adicional (opcional)</label>
+      <textarea id="comentario" placeholder="¿Algo más que quieras contarnos?"></textarea>
+    </div>
+    <button class="btn" onclick="enviarSolicitud()">Solicitar eliminación de cuenta</button>
+    <p class="note">Procesaremos tu solicitud en un plazo de 30 días y te confirmaremos por email.</p>
+  </div>
+
+  <div class="success" id="success">
+    <h3>✅ Solicitud enviada</h3>
+    <p>Recibirás una confirmación en tu correo electrónico. Procesaremos tu solicitud en un plazo de 30 días.</p>
+  </div>
+</div>
+
+<script>
+function enviarSolicitud() {
+  const email = document.getElementById('email').value.trim();
+  const motivo = document.getElementById('motivo').value;
+  const comentario = document.getElementById('comentario').value.trim();
+
+  if (!email) {
+    alert('Por favor ingresa tu correo electrónico');
+    return;
+  }
+
+  const asunto = encodeURIComponent("Solicitud de eliminación de cuenta - K'atu");
+  const cuerpo = encodeURIComponent(
+    `Solicitud de eliminación de cuenta\n\nEmail: ${email}\nMotivo: ${motivo || 'No especificado'}\nComentario: ${comentario || 'Ninguno'}\n\nPor favor procesar en 30 días.`
+  );
+
+  window.open(`mailto:katu.appmarket@gmail.com?subject=${asunto}&body=${cuerpo}`);
+
+  document.getElementById('form').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+}
+</script>
+</body>
+</html>
